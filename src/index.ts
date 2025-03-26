@@ -1,23 +1,16 @@
 import './style.scss';
 import { getGarageCars } from './modules/garage';
 import { panel } from './components/garageView';
+import { locationResolver } from './modules/locationResolver';
+import { tabsWrapper } from './components/tabsLocation';
 const body = document.body;
-console.log(panel);
-// window.addEventListener('hashchange', () => {
-//   if (location) locationResolver();
-// });
+
+window.addEventListener('hashchange', () => {
+  if (location) locationResolver();
+});
 
 window.addEventListener('load', () => {
-  body.append(panel);
-
-  // modal,
-  // titleOptions,
-  // listOptions(initialstate[0]),
-  // addButton,
-  // pasteButton,
-  // saveButton,
-  // clearButton,
-  // startButton,
+  body.append(tabsWrapper, panel);
 });
 
 getGarageCars();
