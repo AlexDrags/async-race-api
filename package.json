@@ -17,11 +17,12 @@
   "author": "mikhama",
   "license": "MIT",
   "devDependencies": {
-    "json-server": "^0.16.3",
     "autoprefixer": "^10.4.20",
+    "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
+    "json-server": "^0.16.3",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.5.3",
     "postcss-loader": "^8.1.1",
