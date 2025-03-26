@@ -1,59 +1,23 @@
 import './style.scss';
-
+import { getGarageCars } from './modules/garage';
+import { panel } from './components/garageView';
 const body = document.body;
-type CarProps = {
-  name: string;
-  color: string;
-};
+console.log(panel);
+// window.addEventListener('hashchange', () => {
+//   if (location) locationResolver();
+// });
 
-enum Paths {
-  CarInGarage = '/garage/',
-  CarLimit = '?_limit=',
-  CarById = '',
-}
+window.addEventListener('load', () => {
+  body.append(panel);
 
-async function getGarageCars() {
-  const response = await fetch(`http://127.0.0.1:3000${Paths.CarInGarage}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const json = await response.json();
-  console.log(json);
-}
+  // modal,
+  // titleOptions,
+  // listOptions(initialstate[0]),
+  // addButton,
+  // pasteButton,
+  // saveButton,
+  // clearButton,
+  // startButton,
+});
 
-async function createCar(carObject: CarProps) {
-  const response = await fetch(`http://127.0.0.1:3000${Paths.CarInGarage}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(carObject),
-  });
-}
-async function updateCar(carObject: CarProps, id: number) {
-  const response = await fetch(
-    `http://127.0.0.1:3000${Paths.CarInGarage}${id}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(carObject),
-    },
-  );
-}
-
-async function deleteCar(id: number) {
-  const response = await fetch(
-    `http://127.0.0.1:3000${Paths.CarInGarage}${id}`,
-    {
-      method: 'DELETE',
-    },
-  );
-}
 getGarageCars();
-// createCar({ name: 'ferarri', color: 'red' });
-// deleteCar(20);
-// updateCar({ name: 'bmw', color: 'black' }, 8);
