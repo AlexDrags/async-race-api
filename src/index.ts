@@ -14,7 +14,6 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', async () => {
   const garageCarsRespone: responseProps[] = await getGarageCars();
-  garageState.push(...garageCarsRespone);
   const listCars = createList(garageCarsRespone);
   if (listCars) {
     title.textContent = `Garage: ${garageState.length}`;
