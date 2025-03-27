@@ -1,0 +1,15 @@
+.car-race {
+  animation-name: race;
+  animation-duration: 5s;
+  animation-delay: 3s;
+}
+
+@keyframes race {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: 94%;
+  }
+}

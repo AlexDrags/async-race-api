@@ -11,12 +11,14 @@ createCarElement.setAttribute('type', 'text');
 
 const updateCarElement = create('input', 'update-car');
 updateCarElement.setAttribute('type', 'text');
+updateCarElement.setAttribute('disabled', '');
 
 const colorCreateCar = create('input', 'color-create');
 colorCreateCar.setAttribute('type', 'color');
 
 const colorUpdateCar = create('input', 'color-update');
 colorUpdateCar.setAttribute('type', 'color');
+colorUpdateCar.setAttribute('disabled', '');
 
 const createCarButton = create('button', 'create-button');
 createCarButton.textContent = 'Create'.toLocaleUpperCase();
@@ -25,6 +27,7 @@ createCarButton.setAttribute('type', 'button');
 const updateCarButton = create('button', 'update-button');
 updateCarButton.textContent = 'Update'.toLocaleUpperCase();
 updateCarButton.setAttribute('type', 'button');
+// updateCarButton.setAttribute('disabled', '');
 
 const raceCarButton = create('button', 'race-button');
 raceCarButton.textContent = 'Race'.toLocaleUpperCase();

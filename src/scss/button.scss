@@ -1,0 +1,19 @@
+.race-button,
+.reset-button,
+.generate-button,
+.update-button,
+.create-button,
+.select-button,
+.garage-button,
+.winners-button,
+.select-item,
+.remove-item {
+  cursor: pointer;
+  border: none;
+  background-color: #efefef;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  color: #000000;
+}

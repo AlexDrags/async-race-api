@@ -1,34 +1,5 @@
 @import url('./scss/global.scss');
-
-.label-create,
-.label-update {
-  display: flex;
-}
-
-.buttons-wrapper {
-  display: flex;
-}
-
-.view-item {
-  border-bottom: 2px solid black;
-  max-height: 75px;
-}
-
-svg {
-  position: relative;
-  width: 110px;
-  height: 110px;
-  animation-name: race;
-  animation-duration: 5s;
-  animation-delay: 3s;
-}
-
-@keyframes race {
-  from {
-    left: 0;
-  }
-
-  to {
-    left: 90%;
-  }
-}
+@import url('./scss/button.scss');
+@import url('./scss/garage.scss');
+@import url('./scss/carItem.scss');
+@import url('./scss/race-animation.scss');

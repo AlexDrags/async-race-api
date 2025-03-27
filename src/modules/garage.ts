@@ -12,8 +12,8 @@ async function getGarageCars() {
       'Content-Type': 'application/json',
     },
   });
-  const json = await response.json();
-  console.log(json);
+  const data = await response.json();
+  return data;
 }
 
 async function createCar(carObject: CarProps) {

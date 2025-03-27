@@ -1,0 +1,12 @@
+.view-item {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid black;
+}
+
+svg {
+  position: relative;
+  top: 40px;
+  width: 110px;
+  height: 110px;
+}

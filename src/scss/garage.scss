@@ -1,0 +1,21 @@
+.title {
+  font-size: 20px;
+}
+
+.tabs-wrapper {
+  margin-bottom: 15px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tabs-wrapper,
+.label-create,
+.label-update,
+.buttons-wrapper {
+  display: flex;
+  gap: 15px;
+}

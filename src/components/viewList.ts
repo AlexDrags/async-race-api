@@ -1,5 +1,15 @@
 import { create } from '../utils/utils';
-import { viewItem } from './itemList';
+import { createCarItem } from './createCarItem';
+import { responseProps } from '../types/types';
 
-export const viewList = create('ul', 'view-list');
-viewList.appendChild(viewItem);
+export function createList(state: responseProps[]) {
+  const viewList = create('ul', 'view-list');
+
+  if (state) {
+    state.forEach((objCar) => {
+      const carItem = createCarItem(objCar);
+      viewList.appendChild(carItem);
+    });
+    return viewList;
+  }
+}

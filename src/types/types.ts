@@ -3,7 +3,8 @@ export type CarProps = {
   color: string;
 };
 
-export type CreateProps = {
-  tag: string;
-  id: string;
+export type responseProps = {
+  name: string;
+  color: string;
+  id: number;
 };

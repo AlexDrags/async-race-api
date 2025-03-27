@@ -2,12 +2,12 @@ import { create } from '../utils/utils';
 
 export const tabsWrapper = create('div', 'tabs-wrapper');
 
-const toGarageButton = create('button', 'garage-button');
+const toGarageButton = create('a', 'garage-button');
 toGarageButton.textContent = 'To garage'.toLocaleUpperCase();
-toGarageButton.setAttribute('type', 'button');
+toGarageButton.setAttribute('href', '#/');
 
-const toWinnersButton = create('button', 'winners-button');
+const toWinnersButton = create('a', 'winners-button');
 toWinnersButton.textContent = 'To winners'.toLocaleUpperCase();
-toWinnersButton.setAttribute('type', 'button');
+toWinnersButton.setAttribute('href', '#/winners');
 
 tabsWrapper.append(toGarageButton, toWinnersButton);

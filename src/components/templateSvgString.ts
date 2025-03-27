@@ -1,5 +1,5 @@
 export const templateCarString = `
-<svg viewBox="0 0 6.827 6.827">
+<svg viewBox="0 0 6.827 6.827" style="fill: red">
       <g id="Layer_x0020_1">
         <g id="_678628480">
           <path
