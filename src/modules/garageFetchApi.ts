@@ -1,5 +1,5 @@
 import { CarProps } from '../types/types';
-import { garageState } from './state';
+import { garageState } from './garageState';
 
 enum Paths {
   CarInGarage = '/garage/',

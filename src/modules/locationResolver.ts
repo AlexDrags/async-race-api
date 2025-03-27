@@ -1,7 +1,7 @@
 import { body } from '..';
-import { panel } from '../components/garageView';
+import { panel } from '../components/createGarageElements';
 import { create } from '../utils/utils';
-import { garageState } from './state';
+import { garageState } from './garageState';
 
 export const title = create('p', 'title');
 

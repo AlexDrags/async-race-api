@@ -1,7 +1,7 @@
-import { createCarItem } from '../components/createCarItem';
-import { createCar, deleteCar, getGarageCars } from '../modules/garage';
+import { createCarItem } from '../components/createItemCarsList';
+import { createCar, deleteCar, getGarageCars } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
-import { garageState } from '../modules/state';
+import { garageState } from '../modules/garageState';
 
 export function create(tag: string, id: string) {
   const createEl = document.createElement(`${tag}`);

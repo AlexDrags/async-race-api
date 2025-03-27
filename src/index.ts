@@ -1,11 +1,11 @@
 import './style.scss';
-import { getGarageCars } from './modules/garage';
+import { getGarageCars } from './modules/garageFetchApi';
 import { locationResolver, title } from './modules/locationResolver';
-import { createList } from './components/viewList';
-import { garageState } from './modules/state';
+import { createList } from './components/createCarsList';
+import { garageState } from './modules/garageState';
 import { responseProps } from './types/types';
-import { tabsWrapper } from './components/tabsLocation';
-import { panel } from './components/garageView';
+import { tabsWrapper } from './components/createTabsElements';
+import { panel } from './components/createGarageElements';
 export const body = document.body;
 
 window.addEventListener('hashchange', () => {

@@ -17,7 +17,6 @@ export function createCarItem(carObj: responseProps) {
   carItem.setAttribute('data-id', `${carObj.id}`);
   carItem.addEventListener('click', removeCarElement);
   carItem.append(selectCarButton, removeCarButton, carTitle);
-  const svgCar = document.createElement('svg');
   const changeStr = templateCarString.replace(
     'style="fill: red"',
     `style="fill: ${carObj.color}"`,
