@@ -29,17 +29,18 @@ async function getGarageCars() {
   }
 }
 
-async function createCar(carObject: CarProps) {
+async function createCar({ name, color }: CarProps) {
   try {
     const response = await fetch(`http://127.0.0.1:3000${Paths.CarInGarage}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(carObject),
+      body: JSON.stringify({ name, color }),
     });
     if (response.status === 201) {
       console.log('Status create operation: ', response.status);
+      await getGarageCars();
     } else {
       throw new Error(`response resolve with status: ${response.status}`);
     }
@@ -47,6 +48,7 @@ async function createCar(carObject: CarProps) {
     console.error(error);
   }
 }
+
 async function updateCar(carObject: CarProps, id: number) {
   try {
     const response = await fetch(

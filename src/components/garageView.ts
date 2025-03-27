@@ -1,4 +1,5 @@
 import { create } from '../utils/utils';
+import { createCarNode } from '../utils/utils';
 
 const panel = create('div', 'panel');
 const buttonsWrapper = create('div', 'buttons-wrapper');
@@ -6,15 +7,17 @@ const buttonsWrapper = create('div', 'buttons-wrapper');
 const labelForCreate = create('label', 'label-create');
 const labelForUpdate = create('label', 'label-update');
 
-const createCarElement = create('input', 'create-car');
-createCarElement.setAttribute('type', 'text');
+const createCarNameInput = document.createElement('input');
+createCarNameInput.classList.add('create-car');
+createCarNameInput.setAttribute('type', 'text');
 
 const updateCarElement = create('input', 'update-car');
 updateCarElement.setAttribute('type', 'text');
 updateCarElement.setAttribute('disabled', '');
 
-const colorCreateCar = create('input', 'color-create');
-colorCreateCar.setAttribute('type', 'color');
+const colorCreateCarInput = document.createElement('input');
+createCarNameInput.classList.add('color-create');
+colorCreateCarInput.setAttribute('type', 'color');
 
 const colorUpdateCar = create('input', 'color-update');
 colorUpdateCar.setAttribute('type', 'color');
@@ -24,10 +27,13 @@ const createCarButton = create('button', 'create-button');
 createCarButton.textContent = 'Create'.toLocaleUpperCase();
 createCarButton.setAttribute('type', 'button');
 
+createCarButton.addEventListener('click', async () => {
+  createCarNode(createCarNameInput, colorCreateCarInput);
+});
+
 const updateCarButton = create('button', 'update-button');
 updateCarButton.textContent = 'Update'.toLocaleUpperCase();
 updateCarButton.setAttribute('type', 'button');
-// updateCarButton.setAttribute('disabled', '');
 
 const raceCarButton = create('button', 'race-button');
 raceCarButton.textContent = 'Race'.toLocaleUpperCase();
@@ -43,7 +49,7 @@ generateCarButton.setAttribute('type', 'button');
 
 buttonsWrapper.append(raceCarButton, resetCarButton, generateCarButton);
 
-labelForCreate.append(createCarElement, colorCreateCar, createCarButton);
+labelForCreate.append(createCarNameInput, colorCreateCarInput, createCarButton);
 labelForUpdate.append(updateCarElement, colorUpdateCar, updateCarButton);
 
 panel.append(labelForCreate, labelForUpdate, buttonsWrapper);

@@ -14,11 +14,10 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', async () => {
   const garageCarsRespone: responseProps[] = await getGarageCars();
-  const listCars = createList(garageCarsRespone);
+  console.log('Garage state: ', garageState.length, garageState);
+  const listCars = createList(garageState);
   if (listCars) {
     title.textContent = `Garage: ${garageState.length}`;
     body.append(tabsWrapper, panel, title, listCars);
   }
 });
-
-getGarageCars();

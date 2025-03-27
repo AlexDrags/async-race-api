@@ -16,6 +16,7 @@ export async function locationResolver() {
     default:
       if (!garageState) title.textContent = `Garage: 0`;
       if (garageState) {
+        panel.remove();
         body.insertBefore(panel, title);
         title.textContent = `Garage: ${garageState.length}`;
       }
