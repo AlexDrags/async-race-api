@@ -7,16 +7,27 @@ export function createCarItem(carObj: responseProps) {
   const selectCarButton = create('button', 'select-item');
   selectCarButton.textContent = 'Select'.toUpperCase();
 
+  const raceButton = create('button', 'race');
+  raceButton.textContent = 'A';
+  const stopButton = create('button', 'stop');
+  stopButton.textContent = 'B';
+
   const removeCarButton = create('button', 'remove-item');
   removeCarButton.textContent = 'Remove'.toUpperCase();
 
   const carTitle = create('p', 'car-title');
-  carTitle.textContent = `${carObj.name}`;
+  carTitle.textContent = `${carObj.name}`.toLocaleUpperCase();
 
   const carItem = create('li', 'view-item');
   carItem.setAttribute('data-id', `${carObj.id}`);
   carItem.addEventListener('click', removeCarElement);
-  carItem.append(selectCarButton, removeCarButton, carTitle);
+  carItem.append(
+    selectCarButton,
+    removeCarButton,
+    raceButton,
+    stopButton,
+    carTitle,
+  );
   const changeStr = templateCarString.replace(
     'style="fill: red"',
     `style="fill: ${carObj.color}"`,

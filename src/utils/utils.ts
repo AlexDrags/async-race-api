@@ -10,8 +10,12 @@ export function create(tag: string, id: string) {
 }
 
 export async function removeCarElement(e: Event) {
-  if (e.target !== null && e.target instanceof HTMLElement) {
-    if (e.currentTarget !== null && e.currentTarget instanceof HTMLElement) {
+  if (
+    e.currentTarget !== null &&
+    e.currentTarget instanceof HTMLElement &&
+    e.target instanceof HTMLElement
+  ) {
+    if (e.target !== null && e.target.classList.contains('remove-item')) {
       e.currentTarget.remove();
 
       const deleteResponse = await deleteCar(
@@ -24,6 +28,18 @@ export async function removeCarElement(e: Event) {
       setTimeout(() => {
         title.textContent = `Garage: ${getResonse.length}`;
       }, 250);
+    }
+    if (e.target.classList.contains('race')) {
+      const carImg = e.currentTarget.querySelector('svg');
+      if (carImg !== null) {
+        if (carImg.classList.contains('car-race')) {
+          console.log('remove class');
+          carImg.classList.remove('car-race');
+        }
+        setTimeout(() => {
+          carImg.classList.add('car-race');
+        }, 500);
+      }
     }
   }
 }
