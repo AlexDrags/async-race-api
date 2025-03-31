@@ -1,4 +1,4 @@
-import { create } from '../utils/utils';
+import { create, initUpdate } from '../utils/utils';
 import { createCarNode } from '../utils/utils';
 
 const panel = create('div', 'panel');
@@ -19,7 +19,7 @@ const colorCreateCarInput = document.createElement('input');
 createCarNameInput.classList.add('color-create');
 colorCreateCarInput.setAttribute('type', 'color');
 
-const colorUpdateCar = create('input', 'color-update');
+const colorUpdateCar = create('input', 'update-color');
 colorUpdateCar.setAttribute('type', 'color');
 colorUpdateCar.setAttribute('disabled', '');
 
@@ -34,6 +34,7 @@ createCarButton.addEventListener('click', async () => {
 const updateCarButton = create('button', 'update-button');
 updateCarButton.textContent = 'Update'.toLocaleUpperCase();
 updateCarButton.setAttribute('type', 'button');
+updateCarButton.setAttribute('disabled', '');
 
 const raceCarButton = create('button', 'race-button');
 raceCarButton.textContent = 'Race'.toLocaleUpperCase();

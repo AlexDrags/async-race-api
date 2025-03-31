@@ -1,7 +1,7 @@
 import { create } from '../utils/utils';
 import { templateCarString } from './templateSvgString';
 import { responseProps } from '../types/types';
-import { removeCarElement } from '../utils/utils';
+import { universeFunctionCarElement } from '../utils/utils';
 
 export function createCarItem(carObj: responseProps) {
   const selectCarButton = create('button', 'select-item');
@@ -20,7 +20,7 @@ export function createCarItem(carObj: responseProps) {
 
   const carItem = create('li', 'view-item');
   carItem.setAttribute('data-id', `${carObj.id}`);
-  carItem.addEventListener('click', removeCarElement);
+  carItem.addEventListener('click', universeFunctionCarElement);
   carItem.append(
     selectCarButton,
     removeCarButton,

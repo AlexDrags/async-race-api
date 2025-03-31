@@ -1,5 +1,10 @@
 import { createCarItem } from '../components/createItemCarsList';
-import { createCar, deleteCar, getGarageCars } from '../modules/garageFetchApi';
+import {
+  createCar,
+  deleteCar,
+  getGarageCars,
+  updateCar,
+} from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
 import { garageState } from '../modules/garageState';
 
@@ -9,7 +14,31 @@ export function create(tag: string, id: string) {
   return createEl;
 }
 
-export async function removeCarElement(e: Event) {
+export async function initUpdate(e: Event, id: number) {
+  const target = e.target;
+  const currentTarget = e.currentTarget;
+  console.log('current:', currentTarget, 'target:', target);
+  if (target !== null && currentTarget !== null) {
+    const updateNameCarInput = document.querySelector('.update-car');
+    const updateColorCarInput = document.querySelector('.update-color');
+
+    if (
+      updateNameCarInput instanceof HTMLInputElement &&
+      updateColorCarInput instanceof HTMLInputElement
+    ) {
+      const nameValue = updateNameCarInput.value;
+      const colorValue = updateColorCarInput.value;
+      console.log('name: ', nameValue, 'color: ', colorValue, 'id: ', id);
+      const response = await updateCar(
+        { name: nameValue, color: colorValue },
+        id,
+      );
+      console.log(response);
+    }
+  }
+}
+
+export async function universeFunctionCarElement(e: Event) {
   if (
     e.currentTarget !== null &&
     e.currentTarget instanceof HTMLElement &&
@@ -29,6 +58,7 @@ export async function removeCarElement(e: Event) {
         title.textContent = `Garage: ${getResonse.length}`;
       }, 250);
     }
+
     if (e.target.classList.contains('race')) {
       const carImg = e.currentTarget.querySelector('svg');
       if (carImg !== null) {
@@ -41,10 +71,34 @@ export async function removeCarElement(e: Event) {
         }, 500);
       }
     }
+
     if (e.target.classList.contains('stop')) {
       const carImg = e.currentTarget.querySelector('svg');
       if (carImg !== null) {
         carImg.classList.remove('car-race');
+      }
+    }
+
+    if (e.target.classList.contains('select-item')) {
+      const updateCarLabel = document.querySelector('.label-update');
+      const updateNameCarInput = document.querySelector('.update-car');
+      const updateColorCarInput = document.querySelector('.update-color');
+      const updateCarButton = document.querySelector('.update-button');
+
+      const id = Number(e.currentTarget.dataset.id);
+
+      if (
+        updateCarLabel !== null &&
+        updateCarButton instanceof HTMLButtonElement &&
+        updateNameCarInput instanceof HTMLInputElement &&
+        updateColorCarInput instanceof HTMLInputElement
+      ) {
+        updateCarButton.disabled = false;
+        updateNameCarInput.disabled = false;
+        updateColorCarInput.disabled = false;
+        updateCarLabel.addEventListener('click', (e) => {
+          initUpdate(e, id);
+        });
       }
     }
   }

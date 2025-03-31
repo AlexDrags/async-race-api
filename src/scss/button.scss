@@ -22,4 +22,9 @@
   &:hover {
     box-shadow: 0 0 10px #585353;
   }
+
+  &:disabled {
+    background-color: #efefef4d;
+    box-shadow: none;
+  }
 }
