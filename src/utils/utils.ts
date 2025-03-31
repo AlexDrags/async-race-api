@@ -41,6 +41,12 @@ export async function removeCarElement(e: Event) {
         }, 500);
       }
     }
+    if (e.target.classList.contains('stop')) {
+      const carImg = e.currentTarget.querySelector('svg');
+      if (carImg !== null) {
+        carImg.classList.remove('car-race');
+      }
+    }
   }
 }
 

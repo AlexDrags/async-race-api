@@ -8,9 +8,9 @@ export function createCarItem(carObj: responseProps) {
   selectCarButton.textContent = 'Select'.toUpperCase();
 
   const raceButton = create('button', 'race');
-  raceButton.textContent = 'A';
+  raceButton.textContent = 'R';
   const stopButton = create('button', 'stop');
-  stopButton.textContent = 'B';
+  stopButton.textContent = 'S';
 
   const removeCarButton = create('button', 'remove-item');
   removeCarButton.textContent = 'Remove'.toUpperCase();
