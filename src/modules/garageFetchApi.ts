@@ -2,8 +2,63 @@ import { CarProps } from '../types/types';
 import { garageState } from './garageState';
 
 enum Paths {
+  IsEngine = '/engine/',
   CarInGarage = '/garage/',
   CarLimit = '?_limit=',
+}
+
+async function engineStartFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id-${id}&status=started`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status start eng operation: ', response.status);
+      const data = await response.json();
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `response resolve with status BAD REQUEST: ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `response resolve with status NOT FOUND: ${response.status}`,
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function engineStopFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id-${id}&status=stopped`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status start eng operation: ', response.status);
+      const data = await response.json();
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `response resolve with status BAD REQUEST: ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `response resolve with status NOT FOUND: ${response.status}`,
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function getGarageCars() {
