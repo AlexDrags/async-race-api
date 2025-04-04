@@ -14,30 +14,6 @@ export function create(tag: string, id: string) {
   return createEl;
 }
 
-export async function initUpdate(e: Event, id: number) {
-  const target = e.target;
-  const currentTarget = e.currentTarget;
-  console.log('current:', currentTarget, 'target:', target);
-  if (target !== null && currentTarget !== null) {
-    const updateNameCarInput = document.querySelector('.update-car');
-    const updateColorCarInput = document.querySelector('.update-color');
-
-    if (
-      updateNameCarInput instanceof HTMLInputElement &&
-      updateColorCarInput instanceof HTMLInputElement
-    ) {
-      const nameValue = updateNameCarInput.value;
-      const colorValue = updateColorCarInput.value;
-      console.log('name: ', nameValue, 'color: ', colorValue, 'id: ', id);
-      const response = await updateCar(
-        { name: nameValue, color: colorValue },
-        id,
-      );
-      console.log(response);
-    }
-  }
-}
-
 export async function universeFunctionCarElement(e: Event) {
   if (
     e.currentTarget !== null &&
@@ -97,7 +73,11 @@ export async function universeFunctionCarElement(e: Event) {
         updateNameCarInput.disabled = false;
         updateColorCarInput.disabled = false;
         updateCarLabel.addEventListener('click', (e) => {
-          initUpdate(e, id);
+          if (
+            e.target instanceof HTMLButtonElement &&
+            e.target.classList.contains('update-button')
+          )
+            initUpdate(e, id);
         });
       }
     }
@@ -123,6 +103,42 @@ export async function createCarNode(
       console.log(document.querySelector('view-list'));
       document.querySelector('.view-list')?.append(newCarElement);
       title.textContent = `Garage: ${garageState.length}`;
+    }
+  }
+}
+
+export async function initUpdate(e: Event, id: number) {
+  const target = e.target;
+  const currentTarget = e.currentTarget;
+  console.log('current:', currentTarget, 'target:', target);
+  if (target !== null && currentTarget !== null) {
+    const updateNameCarInput = document.querySelector('.update-car');
+    const updateColorCarInput = document.querySelector('.update-color');
+
+    if (
+      updateNameCarInput instanceof HTMLInputElement &&
+      updateColorCarInput instanceof HTMLInputElement
+    ) {
+      const nameValue = updateNameCarInput.value;
+      const colorValue = updateColorCarInput.value;
+      console.log('name: ', nameValue, 'color: ', colorValue, 'id: ', id);
+      const updateElement = document.querySelector(
+        `.view-item[data-id="${id}"]`,
+      );
+
+      const response = await updateCar(
+        { name: nameValue, color: colorValue },
+        id,
+      ).then(() => {
+        if (updateElement !== null) {
+          const nameCar = updateElement.querySelector('.car-title');
+          const colorCar = updateElement.querySelector('svg');
+          if (nameCar instanceof HTMLElement && colorCar !== null) {
+            nameCar.textContent = `${nameValue}`;
+            colorCar.style.fill = `${colorValue}`;
+          }
+        }
+      });
     }
   }
 }
