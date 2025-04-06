@@ -7,6 +7,45 @@ enum Paths {
   CarLimit = '?_limit=',
 }
 
+export async function engineDriveFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=drive`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status drive car operation: ', response.status);
+      const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `Wrong parameters: "id" should be any positive number, "status" should be "started", "stopped" or "drive": ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `Engine parameters for car with such id was not found in the garage. Have you tried to set engine status to "started" before?: ${response.status}`,
+      );
+    }
+    if (response.status === 429) {
+      throw new Error(
+        `Drive already in progress. You can't run drive for the same car twice while it's not stopped.: ${response.status}`,
+      );
+    }
+    if (response.status === 500) {
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function engineVelocityFetch(id: number) {
   try {
     const response = await fetch(

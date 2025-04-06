@@ -5,6 +5,7 @@ import {
   getGarageCars,
   updateCar,
   engineVelocityFetch,
+  engineDriveFetch,
 } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
 import { garageState } from '../modules/garageState';
@@ -40,22 +41,32 @@ export async function universeFunctionCarElement(e: Event) {
       const id = Number(e.currentTarget.dataset.id);
       const carImg = e.currentTarget.querySelector('svg');
       const stopButton = e.currentTarget.querySelector('.stop');
+
       const velocityResponse = await engineVelocityFetch(id);
+      const speed = velocityResponse.velocity;
+
       if (
         carImg !== null &&
         e.target instanceof HTMLButtonElement &&
         stopButton instanceof HTMLButtonElement
       ) {
-        e.target.disabled = true;
-        stopButton.disabled = false;
+        {
+          e.target.disabled = true;
+          stopButton.disabled = false;
+        }
 
         if (carImg.classList.contains('car-race')) {
           console.log('remove class');
           carImg.classList.remove('car-race');
         }
-        setTimeout(() => {
-          carImg.classList.add('car-race');
-        }, 250);
+
+        carImg.style.animationDuration = `${speed}s`;
+        carImg.classList.add('car-race');
+
+        const driveResponse = await engineDriveFetch(id);
+
+        if (driveResponse.success === false)
+          carImg.style.animationPlayState = 'paused';
       }
     }
 
@@ -160,12 +171,20 @@ export async function initUpdate(e: Event, id: number) {
   }
 }
 
-export function raceAllCars() {
+export async function raceAllCars() {
   const carsCollection = document.querySelectorAll('.view-item svg');
   carsCollection.forEach((carItem) => carItem.classList.add('car-race'));
 }
 
 export function resetAllCars() {
   const carsCollection = document.querySelectorAll('.view-item svg');
-  carsCollection.forEach((carItem) => carItem.classList.remove('car-race'));
+  const raceButtonCollection = document.querySelectorAll('.view-item .race');
+  const stopButtonCollection = document.querySelectorAll('.view-item .stop');
+  carsCollection.forEach((carItem, index) => {
+    carItem.classList.remove('car-race');
+    if (stopButtonCollection[index] instanceof HTMLButtonElement)
+      stopButtonCollection[index].disabled = true;
+    if (raceButtonCollection[index] instanceof HTMLButtonElement)
+      raceButtonCollection[index].disabled = false;
+  });
 }
