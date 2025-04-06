@@ -147,3 +147,8 @@ export function raceAllCars() {
   const carsCollection = document.querySelectorAll('.view-item svg');
   carsCollection.forEach((carItem) => carItem.classList.add('car-race'));
 }
+
+export function resetAllCars() {
+  const carsCollection = document.querySelectorAll('.view-item svg');
+  carsCollection.forEach((carItem) => carItem.classList.remove('car-race'));
+}
