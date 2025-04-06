@@ -1,5 +1,4 @@
-import { create, initUpdate } from '../utils/utils';
-import { createCarNode } from '../utils/utils';
+import { create, createCarNode, raceAllCars } from '../utils/utils';
 
 const panel = create('div', 'panel');
 const buttonsWrapper = create('div', 'buttons-wrapper');
@@ -39,6 +38,7 @@ updateCarButton.setAttribute('disabled', '');
 const raceCarButton = create('button', 'race-button');
 raceCarButton.textContent = 'Race'.toLocaleUpperCase();
 raceCarButton.setAttribute('type', 'button');
+raceCarButton.addEventListener('click', raceAllCars);
 
 const resetCarButton = create('button', 'reset-button');
 resetCarButton.textContent = 'Reset'.toLocaleUpperCase();

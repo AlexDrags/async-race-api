@@ -1,10 +1,22 @@
+.view-list {
+  overflow-x: hidden;
+}
+
 .view-item {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   border-bottom: 2px solid black;
 
-  & button:not(:last-of-type) {
-    margin-bottom: 10px;
+  & .control-car-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  & button {
+    max-width: 150px;
+    width: 100%;
   }
 }
 

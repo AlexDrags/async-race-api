@@ -21,13 +21,15 @@ export function createCarItem(carObj: responseProps) {
   const carItem = create('li', 'view-item');
   carItem.setAttribute('data-id', `${carObj.id}`);
   carItem.addEventListener('click', universeFunctionCarElement);
-  carItem.append(
+
+  const controlCarWrapper = create('div', 'control-car-wrapper');
+  controlCarWrapper.append(
     selectCarButton,
     removeCarButton,
     raceButton,
     stopButton,
-    carTitle,
   );
+  carItem.append(controlCarWrapper, carTitle);
   const changeStr = templateCarString.replace(
     'style="fill: red"',
     `style="fill: ${carObj.color}"`,

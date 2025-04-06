@@ -142,3 +142,8 @@ export async function initUpdate(e: Event, id: number) {
     }
   }
 }
+
+export function raceAllCars() {
+  const carsCollection = document.querySelectorAll('.view-item svg');
+  carsCollection.forEach((carItem) => carItem.classList.add('car-race'));
+}
