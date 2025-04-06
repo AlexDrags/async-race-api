@@ -11,6 +11,7 @@ export function createCarItem(carObj: responseProps) {
   raceButton.textContent = 'R';
   const stopButton = create('button', 'stop');
   stopButton.textContent = 'S';
+  stopButton.setAttribute('disabled', ``);
 
   const removeCarButton = create('button', 'remove-item');
   removeCarButton.textContent = 'Remove'.toUpperCase();

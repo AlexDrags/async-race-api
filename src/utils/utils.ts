@@ -4,6 +4,7 @@ import {
   deleteCar,
   getGarageCars,
   updateCar,
+  engineVelocityFetch,
 } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
 import { garageState } from '../modules/garageState';
@@ -36,21 +37,37 @@ export async function universeFunctionCarElement(e: Event) {
     }
 
     if (e.target.classList.contains('race')) {
+      const id = Number(e.currentTarget.dataset.id);
       const carImg = e.currentTarget.querySelector('svg');
-      if (carImg !== null) {
+      const stopButton = e.currentTarget.querySelector('.stop');
+      const velocityResponse = await engineVelocityFetch(id);
+      if (
+        carImg !== null &&
+        e.target instanceof HTMLButtonElement &&
+        stopButton instanceof HTMLButtonElement
+      ) {
+        e.target.disabled = true;
+        stopButton.disabled = false;
+
         if (carImg.classList.contains('car-race')) {
           console.log('remove class');
           carImg.classList.remove('car-race');
         }
         setTimeout(() => {
           carImg.classList.add('car-race');
-        }, 500);
+        }, 250);
       }
     }
 
-    if (e.target.classList.contains('stop')) {
+    if (
+      e.target.classList.contains('stop') &&
+      e.target instanceof HTMLButtonElement
+    ) {
+      const startButton = e.currentTarget.querySelector('.race');
       const carImg = e.currentTarget.querySelector('svg');
-      if (carImg !== null) {
+      if (carImg !== null && startButton instanceof HTMLButtonElement) {
+        e.target.disabled = true;
+        startButton.disabled = false;
         carImg.classList.remove('car-race');
       }
     }

@@ -7,10 +7,10 @@ enum Paths {
   CarLimit = '?_limit=',
 }
 
-async function engineStartFetch(id: number) {
+export async function engineVelocityFetch(id: number) {
   try {
     const response = await fetch(
-      `http://127.0.0.1:3000${Paths.IsEngine}?id-${id}&status=started`,
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=started`,
       {
         method: 'PATCH',
       },
@@ -18,6 +18,8 @@ async function engineStartFetch(id: number) {
     if (response.status === 200) {
       console.log('Status start eng operation: ', response.status);
       const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
     }
     if (response.status === 400) {
       throw new Error(
