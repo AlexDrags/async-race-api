@@ -42,9 +42,6 @@ export async function universeFunctionCarElement(e: Event) {
       const carImg = e.currentTarget.querySelector('svg');
       const stopButton = e.currentTarget.querySelector('.stop');
 
-      const velocityResponse = await engineVelocityFetch(id);
-      const speed = velocityResponse.velocity;
-
       if (
         carImg !== null &&
         e.target instanceof HTMLButtonElement &&
@@ -60,13 +57,20 @@ export async function universeFunctionCarElement(e: Event) {
           carImg.classList.remove('car-race');
         }
 
-        carImg.style.animationDuration = `${speed}s`;
-        carImg.classList.add('car-race');
+        const velocityResponse = await engineVelocityFetch(id);
+        const speed = velocityResponse.velocity * 100;
+
+        if (speed) {
+          carImg.style.animationDuration = `${speed}ms`;
+          carImg.classList.add('car-race');
+        }
 
         const driveResponse = await engineDriveFetch(id);
 
-        if (driveResponse.success === false)
-          carImg.style.animationPlayState = 'paused';
+        setTimeout(() => {
+          if (driveResponse.success === false)
+            carImg.style.animationPlayState = 'paused';
+        }, 0);
       }
     }
 
@@ -77,6 +81,9 @@ export async function universeFunctionCarElement(e: Event) {
       const startButton = e.currentTarget.querySelector('.race');
       const carImg = e.currentTarget.querySelector('svg');
       if (carImg !== null && startButton instanceof HTMLButtonElement) {
+        if (carImg.style.animationPlayState === 'paused') {
+          carImg.style.animationPlayState = '';
+        }
         e.target.disabled = true;
         startButton.disabled = false;
         carImg.classList.remove('car-race');
@@ -171,16 +178,51 @@ export async function initUpdate(e: Event, id: number) {
   }
 }
 
-export async function raceAllCars() {
-  const carsCollection = document.querySelectorAll('.view-item svg');
-  carsCollection.forEach((carItem) => carItem.classList.add('car-race'));
+export function raceAllCars() {
+  const carsCollection =
+    document.querySelectorAll<HTMLElement>('.view-item svg');
+
+  carsCollection.forEach(async (carItem) => {
+    if (carItem.parentElement !== null) {
+      const raceCar = carItem.parentElement.querySelector('.race');
+      const stopCar = carItem.parentElement.querySelector('.stop');
+      {
+        if (
+          raceCar instanceof HTMLButtonElement &&
+          stopCar instanceof HTMLButtonElement
+        ) {
+          raceCar.disabled = true;
+          stopCar.disabled = false;
+        }
+      }
+      const id = Number(carItem.parentElement.dataset.id);
+
+      const velocityResponse = await engineVelocityFetch(id);
+      const speed = velocityResponse.velocity * 100;
+
+      if (speed) {
+        carItem.style.animationDuration = `${speed}ms`;
+        carItem.classList.add('car-race');
+      }
+
+      const driveResponse = await engineDriveFetch(id);
+      if (driveResponse.success === false)
+        setTimeout(() => {
+          carItem.style.animationPlayState = 'paused';
+        }, 0);
+    }
+  });
 }
 
 export function resetAllCars() {
-  const carsCollection = document.querySelectorAll('.view-item svg');
+  const carsCollection =
+    document.querySelectorAll<HTMLElement>('.view-item svg');
   const raceButtonCollection = document.querySelectorAll('.view-item .race');
   const stopButtonCollection = document.querySelectorAll('.view-item .stop');
   carsCollection.forEach((carItem, index) => {
+    if (carItem.style.animationPlayState === 'paused') {
+      carItem.style.animationPlayState = '';
+    }
     carItem.classList.remove('car-race');
     if (stopButtonCollection[index] instanceof HTMLButtonElement)
       stopButtonCollection[index].disabled = true;
