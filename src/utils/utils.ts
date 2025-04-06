@@ -6,6 +6,7 @@ import {
   updateCar,
   engineVelocityFetch,
   engineDriveFetch,
+  engineStopFetch,
 } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
 import { garageState } from '../modules/garageState';
@@ -22,6 +23,7 @@ export async function universeFunctionCarElement(e: Event) {
     e.currentTarget instanceof HTMLElement &&
     e.target instanceof HTMLElement
   ) {
+    /* Удаление авто */
     if (e.target !== null && e.target.classList.contains('remove-item')) {
       e.currentTarget.remove();
 
@@ -36,7 +38,7 @@ export async function universeFunctionCarElement(e: Event) {
         title.textContent = `Garage: ${getResonse.length}`;
       }, 250);
     }
-
+    /* Пуск анимации движения авто по кнопке R */
     if (e.target.classList.contains('race')) {
       const id = Number(e.currentTarget.dataset.id);
       const carImg = e.currentTarget.querySelector('svg');
@@ -58,38 +60,48 @@ export async function universeFunctionCarElement(e: Event) {
         }
 
         const velocityResponse = await engineVelocityFetch(id);
-        const speed = velocityResponse.velocity * 100;
+        const speed = velocityResponse.velocity * 200;
 
         if (speed) {
           carImg.style.animationDuration = `${speed}ms`;
           carImg.classList.add('car-race');
+
+          const driveResponse = await engineDriveFetch(id);
+
+          setTimeout(() => {
+            if (driveResponse.success === false)
+              carImg.style.animationPlayState = 'paused';
+          }, 0);
         }
-
-        const driveResponse = await engineDriveFetch(id);
-
-        setTimeout(() => {
-          if (driveResponse.success === false)
-            carImg.style.animationPlayState = 'paused';
-        }, 0);
       }
     }
-
+    /* Остановка автомобиля по кнопке S */
     if (
       e.target.classList.contains('stop') &&
       e.target instanceof HTMLButtonElement
     ) {
+      const id = Number(e.currentTarget.dataset.id);
+      const stopButton = e.currentTarget.querySelector('.stop');
+
       const startButton = e.currentTarget.querySelector('.race');
       const carImg = e.currentTarget.querySelector('svg');
       if (carImg !== null && startButton instanceof HTMLButtonElement) {
-        if (carImg.style.animationPlayState === 'paused') {
-          carImg.style.animationPlayState = '';
+        {
+          if (carImg.style.animationPlayState === 'paused') {
+            carImg.style.animationPlayState = '';
+          }
         }
-        e.target.disabled = true;
-        startButton.disabled = false;
-        carImg.classList.remove('car-race');
+        const stopResponse = await engineStopFetch(id);
+        if (stopResponse.velocity === 0) {
+          e.target.disabled = true;
+          startButton.disabled = false;
+          setTimeout(() => {
+            carImg.classList.remove('car-race');
+          });
+        }
       }
     }
-
+    /* Выбор для обновления параметров авто */
     if (e.target.classList.contains('select-item')) {
       const updateCarLabel = document.querySelector('.label-update');
       const updateNameCarInput = document.querySelector('.update-car');

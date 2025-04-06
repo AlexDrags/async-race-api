@@ -75,17 +75,19 @@ export async function engineVelocityFetch(id: number) {
   }
 }
 
-async function engineStopFetch(id: number) {
+export async function engineStopFetch(id: number) {
   try {
     const response = await fetch(
-      `http://127.0.0.1:3000${Paths.IsEngine}?id-${id}&status=stopped`,
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=stopped`,
       {
         method: 'PATCH',
       },
     );
     if (response.status === 200) {
-      console.log('Status start eng operation: ', response.status);
+      console.log('Status stop eng operation: ', response.status);
       const data = await response.json();
+      console.log(data);
+      return data;
     }
     if (response.status === 400) {
       throw new Error(
