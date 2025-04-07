@@ -231,14 +231,21 @@ export function resetAllCars() {
     document.querySelectorAll<HTMLElement>('.view-item svg');
   const raceButtonCollection = document.querySelectorAll('.view-item .race');
   const stopButtonCollection = document.querySelectorAll('.view-item .stop');
-  carsCollection.forEach((carItem, index) => {
+  carsCollection.forEach(async (carItem, index) => {
     if (carItem.style.animationPlayState === 'paused') {
       carItem.style.animationPlayState = '';
     }
-    carItem.classList.remove('car-race');
-    if (stopButtonCollection[index] instanceof HTMLButtonElement)
-      stopButtonCollection[index].disabled = true;
-    if (raceButtonCollection[index] instanceof HTMLButtonElement)
-      raceButtonCollection[index].disabled = false;
+    if (carItem.parentElement !== null) {
+      const id = Number(carItem.parentElement.dataset.id);
+      const stopResponse = await engineStopFetch(id);
+      if (stopResponse.velocity === 0)
+        setTimeout(() => {
+          carItem.classList.remove('car-race');
+        }, 0);
+      if (stopButtonCollection[index] instanceof HTMLButtonElement)
+        stopButtonCollection[index].disabled = true;
+      if (raceButtonCollection[index] instanceof HTMLButtonElement)
+        raceButtonCollection[index].disabled = false;
+    }
   });
 }
