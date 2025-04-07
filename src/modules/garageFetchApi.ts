@@ -1,10 +1,63 @@
-import { CarProps } from '../types/types';
-import { garageState } from './garageState';
+import { CarProps, winnerResponse } from '../types/types';
+import { garageState, winnersState } from './garageState';
 
 enum Paths {
+  IsWinner = '/winners/',
   IsEngine = '/engine/',
   CarInGarage = '/garage/',
   CarLimit = '?_limit=',
+}
+
+export async function getWinners() {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsWinner}?_page=1`,
+      {
+        method: 'GET',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status get winners operation: ', response.status);
+      const data = await response.json();
+      console.log('Winners obj: ', data);
+      winnersState.push(...data);
+      return data;
+    }
+  } catch {}
+}
+
+export async function createWinner(winnerObject: winnerResponse, id: number) {
+  try {
+    const response = await fetch(`http://127.0.0.1:3000${Paths.IsWinner}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(winnerObject),
+    });
+    if (response.status === 201) {
+      console.log('Status create winner operation: ', response.status);
+      const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
+    }
+    if (response.status === 500) {
+      throw new Error('Insert failed, duplicate id');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getWinnerFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsWinner}${id}`,
+      { method: 'GET' },
+    );
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {}
 }
 
 export async function engineDriveFetch(id: number) {

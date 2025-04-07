@@ -7,6 +7,7 @@ import {
   engineVelocityFetch,
   engineDriveFetch,
   engineStopFetch,
+  getWinnerFetch,
 } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
 import { garageState } from '../modules/garageState';
@@ -32,7 +33,12 @@ export async function universeFunctionCarElement(e: Event) {
       );
 
       const getResonse = await getGarageCars();
-      console.log('length after remove: ', garageState.length, garageState);
+      console.log(
+        'length after remove: ',
+        getResonse.length,
+        garageState.length,
+        garageState,
+      );
 
       setTimeout(() => {
         title.textContent = `Garage: ${getResonse.length}`;
@@ -222,6 +228,7 @@ export function raceAllCars() {
         setTimeout(() => {
           carItem.style.animationPlayState = 'paused';
         }, 0);
+      const winnerResponse = await getWinnerFetch(id);
     }
   });
 }

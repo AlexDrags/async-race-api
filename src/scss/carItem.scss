@@ -2,16 +2,21 @@
   overflow-x: hidden;
 }
 
+.list-hide-js {
+  display: none;
+}
+
 .view-item {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   border-bottom: 3px solid rgba(184, 174, 174, 0.523);
+  border-bottom-style: dashed;
 
   & .control-car-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
     padding-top: 5px;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
   }
 
