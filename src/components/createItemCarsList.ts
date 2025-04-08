@@ -1,5 +1,5 @@
 import { create } from '../utils/utils';
-import { templateCarString } from './templateSvgString';
+import { templateCarString, templateFlagString } from './templateSvgString';
 import { responseProps } from '../types/types';
 import { universeFunctionCarElement } from '../utils/utils';
 
@@ -36,5 +36,6 @@ export function createCarItem(carObj: responseProps) {
     `style="fill: ${carObj.color}"`,
   );
   carItem.insertAdjacentHTML('beforeend', changeStr);
+  carItem.insertAdjacentHTML('beforeend', templateFlagString);
   return carItem;
 }

@@ -197,9 +197,10 @@ export async function initUpdate(e: Event, id: number) {
 }
 
 export function raceAllCars() {
-  const carsCollection =
-    document.querySelectorAll<HTMLElement>('.view-item svg');
-
+  const carsCollection = document.querySelectorAll<HTMLElement>(
+    '.view-item .svg-car',
+  );
+  console.log(carsCollection);
   carsCollection.forEach(async (carItem) => {
     if (carItem.parentElement !== null) {
       const raceCar = carItem.parentElement.querySelector('.race');
@@ -234,8 +235,9 @@ export function raceAllCars() {
 }
 
 export function resetAllCars() {
-  const carsCollection =
-    document.querySelectorAll<HTMLElement>('.view-item svg');
+  const carsCollection = document.querySelectorAll<HTMLElement>(
+    '.view-item .svg-car',
+  );
   const raceButtonCollection = document.querySelectorAll('.view-item .race');
   const stopButtonCollection = document.querySelectorAll('.view-item .stop');
   carsCollection.forEach(async (carItem, index) => {
