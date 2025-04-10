@@ -247,7 +247,7 @@ export function raceAllCars() {
         setTimeout(() => {
           carItem.style.animationPlayState = 'paused';
         }, 0);
-      const winnerResponse = await getWinnerFetch(id);
+      const winnerResponse = await getWinnerFetch(1);
     }
   });
 }
