@@ -3,7 +3,11 @@
 }
 
 .modal-show {
+  text-transform: uppercase;
+  color: #ffff00;
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0;
   right: 0;

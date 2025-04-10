@@ -1,4 +1,5 @@
 import { createCarItem } from '../components/createItemCarsList';
+import { modal } from '../components/modal';
 import {
   createCar,
   deleteCar,
@@ -16,6 +17,14 @@ export function create(tag: string, id: string) {
   const createEl = document.createElement(`${tag}`);
   createEl.classList.add(`${id}`);
   return createEl;
+}
+
+export async function showWiner(carName: string, time: string) {
+  modal.textContent = `${carName} went first [${time}sec]`;
+  modal.classList.add('modal-show');
+  setTimeout(() => {
+    modal.classList.remove('modal-show');
+  }, 1000);
 }
 
 export async function universeFunctionCarElement(e: Event) {
@@ -200,9 +209,14 @@ export function raceAllCars() {
   const carsCollection = document.querySelectorAll<HTMLElement>(
     '.view-item .svg-car',
   );
+  const carsItemCollection = document.querySelectorAll<HTMLElement>(
+    '.view-item .svg-car',
+  );
   console.log(carsCollection);
-  carsCollection.forEach(async (carItem) => {
+  carsCollection.forEach(async (carItem, index) => {
     if (carItem.parentElement !== null) {
+      const currentTarget = carItem.parentElement;
+
       const raceCar = carItem.parentElement.querySelector('.race');
       const stopCar = carItem.parentElement.querySelector('.stop');
       {
@@ -220,6 +234,10 @@ export function raceAllCars() {
       const speed = velocityResponse.velocity * 100;
 
       if (speed) {
+        currentTarget.setAttribute(
+          'data-velocity',
+          `${velocityResponse.velocity}`,
+        );
         carItem.style.animationDuration = `${speed}ms`;
         carItem.classList.add('car-race');
       }

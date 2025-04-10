@@ -11,9 +11,7 @@ export function createWinnerList(state: winnerResponse[]) {
       const winnerInfo = create('p', 'winner-text');
       const { id, wins, time } = objWiiner;
       winnerInfo.textContent = `Number: ${id}, Wins: ${wins}, Best time: ${time}`;
-      winnerItem.addEventListener('animationend', () => {
-        console.log('animationend');
-      });
+
       winnerItem.appendChild(winnerInfo);
       winnersList.appendChild(winnerItem);
     });
