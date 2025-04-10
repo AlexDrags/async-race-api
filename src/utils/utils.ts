@@ -11,7 +11,8 @@ import {
   getWinnerFetch,
 } from '../modules/garageFetchApi';
 import { title } from '../modules/locationResolver';
-import { garageState } from '../modules/garageState';
+import { garageState, firstCarState } from '../modules/garageState';
+import { body } from '..';
 
 export function create(tag: string, id: string) {
   const createEl = document.createElement(`${tag}`);
@@ -24,7 +25,8 @@ export async function showWiner(carName: string, time: string) {
   modal.classList.add('modal-show');
   setTimeout(() => {
     modal.classList.remove('modal-show');
-  }, 1000);
+    modal.remove();
+  }, 500);
 }
 
 export async function universeFunctionCarElement(e: Event) {
@@ -267,6 +269,7 @@ export function resetAllCars() {
       const stopResponse = await engineStopFetch(id);
       if (stopResponse.velocity === 0)
         setTimeout(() => {
+          body.append(modal);
           carItem.classList.remove('car-race');
         }, 0);
       if (stopButtonCollection[index] instanceof HTMLButtonElement)

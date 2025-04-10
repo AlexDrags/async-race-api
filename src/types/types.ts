@@ -14,3 +14,8 @@ export type winnerResponse = {
   wins: number;
   time: number;
 };
+
+export type firstWinner = {
+  carName: string;
+  time: string;
+};

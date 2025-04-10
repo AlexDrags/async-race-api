@@ -1,4 +1,4 @@
-import { responseProps, winnerResponse } from '../types/types';
+import { responseProps, winnerResponse, firstWinner } from '../types/types';
 export const garageState: responseProps[] = [];
 export const winnersState: winnerResponse[] = [];
-export const firstCar = [];
+export const firstCarState: firstWinner[] = [];

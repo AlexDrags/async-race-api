@@ -1,7 +1,6 @@
 import { create } from '../utils/utils';
 import { createCarItem } from './createItemCarsList';
 import { responseProps } from '../types/types';
-import { getWinners } from '../modules/garageFetchApi';
 import { showWiner } from '../utils/utils';
 export function createList(state: responseProps[]) {
   const viewList = create('ul', 'view-list');
