@@ -2,10 +2,13 @@ import './style.scss';
 import { getGarageCars } from './modules/garageFetchApi';
 import { locationResolver, title } from './modules/locationResolver';
 import { createList } from './components/createCarsList';
-import { garageState } from './modules/garageState';
-import { responseProps } from './types/types';
+import { garageState, winnersState } from './modules/garageState';
+import { responseProps, winnerResponse } from './types/types';
 import { tabsWrapper } from './components/createTabsElements';
+import { getWinners } from './modules/garageFetchApi';
 import { panel } from './components/createGarageElements';
+import { modal } from './components/modal';
+import { createWinnerList } from './components/createWinnersList';
 export const body = document.body;
 
 window.addEventListener('hashchange', () => {
@@ -14,10 +17,12 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', async () => {
   const garageCarsRespone: responseProps[] = await getGarageCars();
-  console.log('Garage state: ', garageState.length, garageState);
+  const winnerResponse: winnerResponse[] = await getWinners();
+  const winnerList = createWinnerList(winnersState);
   const listCars = createList(garageState);
   if (listCars) {
     title.textContent = `Garage: ${garageState.length}`;
-    body.append(tabsWrapper, panel, title, listCars);
+    if (winnerList instanceof HTMLElement)
+      body.append(tabsWrapper, panel, title, listCars, winnerList, modal);
   }
 });

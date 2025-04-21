@@ -1,5 +1,9 @@
-import { create } from '../utils/utils';
-import { createCarNode } from '../utils/utils';
+import {
+  create,
+  createCarNode,
+  raceAllCars,
+  resetAllCars,
+} from '../utils/utils';
 
 const panel = create('div', 'panel');
 const buttonsWrapper = create('div', 'buttons-wrapper');
@@ -19,7 +23,7 @@ const colorCreateCarInput = document.createElement('input');
 createCarNameInput.classList.add('color-create');
 colorCreateCarInput.setAttribute('type', 'color');
 
-const colorUpdateCar = create('input', 'color-update');
+const colorUpdateCar = create('input', 'update-color');
 colorUpdateCar.setAttribute('type', 'color');
 colorUpdateCar.setAttribute('disabled', '');
 
@@ -34,14 +38,17 @@ createCarButton.addEventListener('click', async () => {
 const updateCarButton = create('button', 'update-button');
 updateCarButton.textContent = 'Update'.toLocaleUpperCase();
 updateCarButton.setAttribute('type', 'button');
+updateCarButton.setAttribute('disabled', '');
 
 const raceCarButton = create('button', 'race-button');
 raceCarButton.textContent = 'Race'.toLocaleUpperCase();
 raceCarButton.setAttribute('type', 'button');
+raceCarButton.addEventListener('click', raceAllCars);
 
 const resetCarButton = create('button', 'reset-button');
 resetCarButton.textContent = 'Reset'.toLocaleUpperCase();
 resetCarButton.setAttribute('type', 'button');
+resetCarButton.addEventListener('click', resetAllCars);
 
 const generateCarButton = create('button', 'generate-button');
 generateCarButton.textContent = 'Generate'.toLocaleUpperCase();

@@ -1,9 +1,160 @@
-import { CarProps } from '../types/types';
-import { garageState } from './garageState';
+import { CarProps, winnerResponse } from '../types/types';
+import { garageState, winnersState } from './garageState';
 
 enum Paths {
+  IsWinner = '/winners/',
+  IsEngine = '/engine/',
   CarInGarage = '/garage/',
   CarLimit = '?_limit=',
+}
+
+export async function getWinners() {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsWinner}?_page=1`,
+      {
+        method: 'GET',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status get winners operation: ', response.status);
+      const data = await response.json();
+      console.log('Winners obj: ', data);
+      winnersState.push(...data);
+      return data;
+    }
+  } catch {}
+}
+
+export async function createWinner(winnerObject: winnerResponse, id: number) {
+  try {
+    const response = await fetch(`http://127.0.0.1:3000${Paths.IsWinner}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(winnerObject),
+    });
+    if (response.status === 201) {
+      console.log('Status create winner operation: ', response.status);
+      const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
+    }
+    if (response.status === 500) {
+      throw new Error('Insert failed, duplicate id');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getWinnerFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsWinner}${id}`,
+      { method: 'GET' },
+    );
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {}
+}
+
+export async function engineDriveFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=drive`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status drive car operation: ', response.status);
+      const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `Wrong parameters: "id" should be any positive number, "status" should be "started", "stopped" or "drive": ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `Engine parameters for car with such id was not found in the garage. Have you tried to set engine status to "started" before?: ${response.status}`,
+      );
+    }
+    if (response.status === 429) {
+      throw new Error(
+        `Drive already in progress. You can't run drive for the same car twice while it's not stopped.: ${response.status}`,
+      );
+    }
+    if (response.status === 500) {
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function engineVelocityFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=started`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status start eng operation: ', response.status);
+      const data = await response.json();
+      console.log('Velocity obj: ', data);
+      return data;
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `response resolve with status BAD REQUEST: ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `response resolve with status NOT FOUND: ${response.status}`,
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function engineStopFetch(id: number) {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:3000${Paths.IsEngine}?id=${id}&status=stopped`,
+      {
+        method: 'PATCH',
+      },
+    );
+    if (response.status === 200) {
+      console.log('Status stop eng operation: ', response.status);
+      const data = await response.json();
+      console.log(data);
+      return data;
+    }
+    if (response.status === 400) {
+      throw new Error(
+        `response resolve with status BAD REQUEST: ${response.status}`,
+      );
+    }
+    if (response.status === 404) {
+      throw new Error(
+        `response resolve with status NOT FOUND: ${response.status}`,
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function getGarageCars() {
